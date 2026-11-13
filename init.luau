@@ -2,7 +2,13 @@ local raku = {}
 
 export type raku = typeof(raku)
 
-raku.Services = {}
+type service = {
+	Client: { (Player, ...any) -> ...any },
+	Init: () -> nil,
+	Start: () -> nil,
+}
+
+raku.Services = {} :: { service }
 
 --[[
 creates a new service
@@ -43,6 +49,24 @@ function raku.AddServices(basePath: Instance, extraPath: string?)
 		else
 			warn("Service entrypoint not found")
 		end
+	end
+end
+
+--[[
+runs init on all services
+]]
+function raku.InitialiseAllServices()
+	for service in ipairs(raku.Services) do
+		service.Init()
+	end
+end
+
+--[[
+runs start on all services
+]]
+function raku.StartAllServices()
+	for service in ipairs(raku.Services) do
+		service.Start()
 	end
 end
 
