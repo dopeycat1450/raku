@@ -4,6 +4,11 @@ export type raku = typeof(raku)
 
 raku.Services = {}
 
+--[[
+creates a new service
+
+@param name the name of the service (this will be used for any service-specific functions run)
+]]
 function raku.CreateService(name: string)
 	local service = raku.Services[name]
 	service.Client = {} :: { (Player, ...any) -> ...any }
@@ -18,6 +23,8 @@ end
 
 --[[
 requires all modulescripts in a folder
+
+@param basePath the folder containing all your services
 
 @param extraPath if your folder structure does not directly contain modulescripts, but they are instead in other folders, use this (the string must lead to a modulescript not a folder)
 ]]
